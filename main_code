@@ -1,0 +1,147 @@
+# ==========================================
+# 1. DEFINISI CLASS (BLUEPRINT OOP)
+# ==========================================
+
+# Parent Class
+class Santri:
+    def __init__(self, nama, asal, kamar):
+        self.nama = nama
+        self.asal = asal
+        self.kamar = kamar
+
+    def tampilkan_biodata(self):
+        print(f"- {self.nama} (Asal: Kec. {self.asal})")
+
+# Child Class 1: Santri Pengurus (Inheritance)
+class SantriPengurus(Santri):
+    def __init__(self, nama, asal, kamar, jabatan):
+        super().__init__(nama, asal, kamar)
+        self.jabatan = jabatan
+
+    # Polymorphism: Mengubah cara tampil_biodata khusus pengurus
+    def tampilkan_biodata(self):
+        print(f"- {self.nama} (Asal: Kec. {self.asal}) | Jabatan: {self.jabatan}")
+
+# Child Class 2: Santri Tahfidz (Inheritance)
+class SantriTahfidz(Santri):
+    def __init__(self, nama, asal, kamar, jumlah_hafalan):
+        super().__init__(nama, asal, kamar)
+        self.jumlah_hafalan = jumlah_hafalan
+
+    # Polymorphism: Mengubah cara tampil_biodata khusus tahfidz
+    def tampilkan_biodata(self):
+        print(f"- {self.nama} (Asal: Kec. {self.asal}) | Hafalan: {self.jumlah_hafalan} Juz")
+
+# ==========================================
+# 2. DATA MENTAH SANTRI BANJARNEGARA
+# ==========================================
+
+data_pengurus = [
+    ("Ahmad Ridwan", "Banjarnegara", "Ketua Keamanan"), ("Budi Santoso", "Mandiraja", "Ketua Kebersihan"),
+    ("Chairul Lisan", "Batur", "Bendahara"), ("Dika Permana", "Rakit", "Sekretaris"),
+    ("Eko Prasetyo", "Wanadadi", "Pengurus Takmir"), ("Fajar Hidayat", "Punggelan", "Bagian Bahasa"),
+    ("Gilang Ramadhan", "Karangkobar", "Bagian Pendidikan"), ("Hafiz Alim", "Kalibening", "Bagian Dapur"),
+    ("Iqbal Mustofa", "Pejawaran", "Bagian Kesehatan"), ("Jamilur Rahman", "Sigaluh", "Ketua Kamar")
+]
+
+data_tahfidz = [
+    ("Kamaludin", "Purwonegoro", 5), ("Lukman Hakim", "Bawang", 12),
+    ("Maulana Ishaq", "Purworejo Klampok", 3), ("Naufal Zaki", "Susukan", 8),
+    ("Oki Setiawan", "Banjarmangu", 15), ("Putra Pratama", "Madukara", 2),
+    ("Qasim Ali", "Pagentan", 10), ("Rian Saputra", "Wanayasa", 7),
+    ("Salman Al Farisi", "Pandanarum", 20), ("Teguh Wibowo", "Pagedongan", 1)
+]
+
+data_reguler = [
+    ("Umar Faruq", "Batur"), ("Vian Nugroho", "Mandiraja"),
+    ("Wahyu Hidayat", "Wanadadi"), ("Yahya Ayyash", "Banjarnegara"),
+    ("Zaid Bin Tsabit", "Rakit"), ("Arif Rahman", "Punggelan"),
+    ("Baskoro Aji", "Karangkobar"), ("Candra Wijaya", "Kalibening"),
+    ("Dani Setiawan", "Pejawaran"), ("Eza Gionino", "Sigaluh")
+]
+
+# ==========================================
+# 3. PROSES PEMBUATAN OBJEK (INSTANTIATION)
+# ==========================================
+
+list_objek_pengurus = []
+list_objek_tahfidz = []
+list_objek_reguler = []
+
+# Mengubah data mentah pengurus menjadi Objek SantriPengurus
+for data in data_pengurus:
+    objek = SantriPengurus(data[0], data[1], "Abu Bakar", data[2])
+    list_objek_pengurus.append(objek)
+
+# Mengubah data mentah tahfidz menjadi Objek SantriTahfidz
+for data in data_tahfidz:
+    objek = SantriTahfidz(data[0], data[1], "Umar Bin Khattab", data[2])
+    list_objek_tahfidz.append(objek)
+
+# Mengubah data mentah reguler menjadi Objek Santri (Reguler)
+for data in data_reguler:
+    objek = Santri(data[0], data[1], "Utsman Bin Affan")
+    list_objek_reguler.append(objek)
+
+# ==========================================
+# 4. MENAMPILKAN SEMUA DATA DARI OBJEK
+# ==========================================
+
+print("="*50)
+print("SISTEM INFORMASI PESANTREN (SANTRI BANJARNEGARA)")
+print("="*50)
+
+print(f"\n[1] KAMAR {list_objek_pengurus[0].kamar.upper()} (PENGURUS)")
+for santri in list_objek_pengurus:
+    santri.tampilkan_biodata()
+
+print(f"\n[2] KAMAR {list_objek_tahfidz[0].kamar.upper()} (TAHFIDZ)")
+for santri in list_objek_tahfidz:
+    santri.tampilkan_biodata()
+
+print(f"\n[3] KAMAR {list_objek_reguler[0].kamar.upper()} (REGULER)")
+for santri in list_objek_reguler:
+    santri.tampilkan_biodata()
+ 
+
+# Gabungkan semua objek dari ketiga kamar ke dalam satu list besar
+semua_santri = list_objek_pengurus + list_objek_tahfidz + list_objek_reguler
+
+# =============================================================
+# SCENARIO 1: Menampilkan Santri yang Hanya Berasal dari "Batur"
+# =============================================================
+print("\n" + "="*50)
+print("HASIL FILTER: SANTRI DARI KECAMATAN BATUR")
+print("="*50)
+
+kategori_asal = "Batur"
+for santri in semua_santri:
+    if santri.asal == kategori_asal:
+        santri.tampilkan_biodata()
+
+
+# =============================================================
+# SCENARIO 2: Menampilkan Santri Tahfidz yang Hafalannya >= 10 Juz
+# =============================================================
+print("\n" + "="*50)
+print("HASIL FILTER: SANTRI TAHFIDZ DENGAN HAFALAN >= 10 JUZ")
+print("="*50)
+
+for santri in list_objek_tahfidz:
+    # Karena kita tahu list_objek_tahfidz pasti punya atribut jumlah_hafalan
+    if santri.jumlah_hafalan >= 10:
+        santri.tampilkan_biodata()
+
+
+# =============================================================
+# SCENARIO 3: Fitur Pencarian Berdasarkan Nama (Keyword Search)
+# =============================================================
+print("\n" + "="*50)
+print("HASIL PENCARIAN NAMA: 'Ali'")
+print("="*50)
+
+kata_kunci = "Ali"
+for santri in semua_santri:
+    # Menggunakan 'in' dan '.lower()' agar pencarian tidak sensitif huruf besar/kecil
+    if kata_kunci.lower() in santri.nama.lower():
+        santri.tampilkan_biodata()
